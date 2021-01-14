@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <table class="table">
+            <thead class="thead-dark">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Название</th>
+  
+            
+          </tr>
+        </thead>
+        <tbody>
+
+            {%for songs in songs_list %}
+                {%for song in songs %}
+            <tr>
+                <th scope="row">{{song.song_id}}</th>
+                <th scope="row">{{song.song_title}}</th>
+                
+                {% endfor %}
+            {% endfor %}
+    
+          </tr>
+        </tbody>
+    </table>
+
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Добавить песню
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Добавление альбома</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{% url 'album_songs' album_id=album_id %}" method="POST" class="form-signin">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Название песни </label>
+                    <input type="text" class="form-control"  name = "song_name" required>
+                  </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Добавить</button>
+
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    {% endblock %}

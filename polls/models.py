@@ -9,7 +9,6 @@ from django.db import models
 
 
 class AlbumSongs(models.Model):
-    id = models.IntegerField(primary_key=True)
     album = models.ForeignKey('Albums', models.DO_NOTHING)
     song = models.ForeignKey('Songs', models.DO_NOTHING)
 
@@ -19,34 +18,34 @@ class AlbumSongs(models.Model):
 
 
 class Albums(models.Model):
-    album_id = models.IntegerField(primary_key=True)
+    albums_id = models.AutoField(primary_key=True)
     artist = models.ForeignKey('Artists', models.DO_NOTHING)
     album_title = models.CharField(max_length=30)
-    album_year = models.IntegerField()
+    album_year = models.DateField()
 
     class Meta:
         managed = False
         db_table = 'albums'
 
 
-class Artists(models.Model):
-    artist = models.OneToOneField('Persons', models.DO_NOTHING, primary_key=True)
-    genre = models.ForeignKey('Genres', models.DO_NOTHING)
-    country_id = models.IntegerField()
-    group = models.ForeignKey('Groups', models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'artists'
-
-
-class Atrist(models.Model):
+class Artist(models.Model):
     nickname = models.CharField(unique=True, max_length=30)
     name = models.CharField(max_length=30, blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'atrist'
+        db_table = 'artist'
+
+
+class Artists(models.Model):
+    artist = models.OneToOneField('Persons', models.DO_NOTHING, primary_key=True)
+    genre = models.ForeignKey('Genres', models.DO_NOTHING)
+    country = models.ForeignKey('Countres', models.DO_NOTHING)
+    group = models.ForeignKey('Groups', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'artists'
 
 
 class AuthGroup(models.Model):
@@ -169,7 +168,7 @@ class DjangoSession(models.Model):
 
 
 class Genres(models.Model):
-    genre_id = models.IntegerField(primary_key=True)
+    genre_id = models.AutoField(primary_key=True)
     genre_name = models.CharField(max_length=30)
 
     class Meta:
@@ -178,7 +177,7 @@ class Genres(models.Model):
 
 
 class Groups(models.Model):
-    group_id = models.IntegerField(primary_key=True)
+    group_id = models.AutoField(primary_key=True)
     group_name = models.CharField(max_length=30)
 
     class Meta:
@@ -187,11 +186,11 @@ class Groups(models.Model):
 
 
 class Persons(models.Model):
-    artist_id = models.IntegerField(primary_key=True)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    sex = models.CharField(max_length=20)
-    birthday = models.DateField()
+    artist_id = models.AutoField(primary_key=True)
+    first_name = models.CharField(max_length=30, blank=True, null=True)
+    second_name = models.CharField(max_length=30, blank=True, null=True)
+    sex = models.CharField(max_length=20, blank=True, null=True)
+    birthday = models.DateField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -215,8 +214,8 @@ class Song(models.Model):
 
 
 class Songs(models.Model):
-    song_id = models.IntegerField(primary_key=True)
-    song_title = models.CharField(unique=True, max_length=30)
+    song_id = models.AutoField(primary_key=True)
+    song_title = models.CharField(max_length=30)
 
     class Meta:
         managed = False
@@ -224,7 +223,7 @@ class Songs(models.Model):
 
 
 class TopArtists(models.Model):
-    artist = models.OneToOneField(Atrist, models.DO_NOTHING)
+    artist = models.OneToOneField(Artist, models.DO_NOTHING)
     position = models.OneToOneField(Positions, models.DO_NOTHING)
     song = models.ForeignKey(Song, models.DO_NOTHING)
 

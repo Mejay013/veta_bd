@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="{% url 'change_person' person_id=person.artist_id %}" method="POST">
+        {% csrf_token %}
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Идентификатор артиста</label>
+        <input type="text" class="form-control" value="{{person.artist_id}}"  name='person_id' aria-describedby="emailHelp" >
+        <div id="emailHelp" class="form-text">Идентификатор уникален, задавать вручную запрещено</div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Имя</label>
+        <input type="text" class="form-control" value="{{person.first_name}}" name = "first_name">
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Фамилия</label>
+        <input type="text" class="form-control" value="{{person.second_name}}" name = "second_name">
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Пол</label>
+        <input type="text" class="form-control" value="{{person.sex}}" name = "sex">
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Дата рождения </label>
+        <input type="date" class="form-control" value="{{person.date}}" name = "date">
+      </div>
+      <div class="form-group">
+        <label for="sel1">Жанр исполнителя:</label>
+        <select class="form-control" name="genre" id="sel1" >
+            {% for i in genre %}
+          {% if i.genre_name == artist_genre %}
+          <option value ="{{i.genre_id}}" selected >{{i.genre_name}}</option>
+            {% else %}
+            <option value ="{{i.genre_id}}" >{{i.genre_name}}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="sel1">Страна исполнителя:</label>
+        <select class="form-control" name="country" id="sel1" >
+            {% for i in country %}
+            {% if i.country_name == artist_country%}
+          <option value ="{{i.country_id}}" selected >{{i.country_name}}</option>
+            {% else %}
+            <option value ="{{i.country_id}}"  >{{i.country_name}}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="sel1">Лейбл исполнителя:</label>
+        <select class="form-control" name="group" id="sel1" >
+            {% for i in group %}
+          {% if i.group_name == artist_group %}
+          <option value ="{{i.group_id}}" selected >{{i.group_name}}</option>
+            {% else %}
+            <option value ="{{i.group_id}}" >{{i.group_name}}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Обновить</button>
+    </form>
+      <br>
+    <br>
+    <table class="table">
+        <thead class="thead-dark">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Название альбома</th>
+        <th scope="col">Год выпуска</th>
+        <th scope="col">Действие</th>
+
+      </tr>
+    </thead>
+    <tbody>
+
+        {%for album in  albums %}
+        <tr>
+            <th scope="row">{{album.albums_id }}</th>
+            <th scope="row">{{album.album_title}}</th>
+            <th scope="row">{{album.album_year}}</th>
+            <th scope="row"> <a href="{% url 'album_songs' album_id=album.albums_id %}"><button class="btn btn-primary">Посмотреть песни альбома</button></a></th>
+
+           
+        {% endfor %}
+
+      </tr>
+    </tbody>
+        </table>
+    
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Добавить новый альбом
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Добавление альбома</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{% url 'new_album' artist_id=person.artist_id %}" method="POST" class="form-signin">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Название альбома</label>
+                    <input type="text" class="form-control"  name = "album_title" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Дата создания</label>
+                    <input type="text" class="form-control"  name = "album_year" required>
+                 
+                    
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Добавить</button>
+
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+  
+    {% endblock %}

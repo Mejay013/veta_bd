@@ -1,0 +1,289 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal4">
+    Добавить новую страну
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Добавление страны</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{% url 'add_country'%}" method="POST" class="form-signin">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Название страны </label>
+                    <input type="text" class="form-control"  name = "new_country" required>
+                  </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Добавить</button>
+
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal5">
+    Добавить новый жанр
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Добавление жанра</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{% url 'add_genre'%}" method="POST" class="form-signin">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Название жанра </label>
+                    <input type="text" class="form-control"  name = "new_genre" required>
+                  </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Добавить</button>
+
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal6">
+    Добавить новый лейб
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal6" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Добавление жанра</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{% url 'add_group'%}" method="POST" class="form-signin">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Название жанра </label>
+                    <input type="text" class="form-control" name = "new_group" required>
+                  </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Добавить</button>
+
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    {% endif %}
+
+    <hr>
+<h1> Страны:</h1>
+        <table class="table">
+            <thead class="thead-dark">
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Название страны</th>
+          </tr>
+        </thead>
+        <tbody>
+
+            {%for e in countres%}
+            <tr>
+                {% if not e.country_id ==  1 %}
+                <th scope="row">{{e.country_id}}</th>
+                <th scope="row">{{e.country_name}}</th>
+                {% endif %}
+                {% endfor %}
+    
+          </tr>
+        </tbody>
+    </table>
+    <!-- Button trigger modal -->
+<th scope="row"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+    Переименовать страну
+  </button></th>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Переименование страну</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{% url 'rename_country'%}" method="POST" class="form-signin">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="sel1">Выберите страну:</label>
+                    <select class="form-control" name="country_id" id="sel1" >
+                        {% for e in countres %}
+                            <option value ="{{e.country_id}}" >{{e.country_name}}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Название лейбла</label>
+                    <input type="text" class="form-control"   name = "rename_country" required>
+                  </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Переименовать</button>
+
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+<hr>
+    <h1> Жанры:</h1>
+    <table class="table">
+        <thead class="thead-dark">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Название жанра</th>
+      </tr>
+    </thead>
+    <tbody>
+
+        {%for e in genres%}
+        <tr>
+            {% if not e.genre_id ==  1 %}
+            <th scope="row">{{e.genre_id}}</th>
+            <th scope="row">{{e.genre_name}}</th>
+            {% endif %}
+            {% endfor %}
+
+      </tr>
+    </tbody>
+</table>
+<!-- Button trigger modal -->
+<th scope="row"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+    Переименовать жанр
+  </button></th>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Переименование жанра</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{% url 'rename_genre'%}" method="POST" class="form-signin">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="sel1">Выберите жанр:</label>
+                    <select class="form-control" name="genre_id" id="sel1" >
+                        {% for e in genres %}
+                            <option value ="{{e.genre_id}}" >{{e.genre_name}}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Название лейбла</label>
+                    <input type="text" class="form-control"   name = "rename_genre" required>
+                  </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Переименовать</button>
+
+        </form>
+        </div>
+      </div>
+    </div>
+</div>
+  </div>
+<hr>
+
+
+
+
+<h1> Лейблы:</h1>
+<table class="table">
+    <thead class="thead-dark">
+  <tr>
+    <th scope="col">Id</th>
+    <th scope="col">Название лейбла</th>
+    <th scope="col">Действие</th>
+  </tr>
+</thead>
+<tbody>
+
+    {% for e in groups%}
+    <tr>
+        {% if not e.group_id ==  1 %}
+        <th scope="row">{{e.group_id}}</th>
+        <th scope="row">{{e.group_name}}</th>
+        {% endif %}
+        {% endfor %}
+
+  </tr>
+</tbody>
+</table>
+<!-- Button trigger modal -->
+<th scope="row"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+    Переименовать лейбл
+  </button></th>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Переименование лейбла</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{% url 'rename_group'%}" method="POST" class="form-signin">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="sel1">Выберите лейбл:</label>
+                    <select class="form-control" name="group_id" id="sel1" >
+                        {% for e in groups %}
+                            <option value ="{{e.group_id}}" >{{e.group_name}}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Название лейбла</label>
+                    <input type="text" class="form-control"   name = "rename_group" required>
+                  </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Переименовать</button>
+
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div></div>
+
+{% endblock %}
