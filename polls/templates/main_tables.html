@@ -66,7 +66,7 @@
 </div>
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal6">
-    Добавить новый лейб
+    Добавить новый лейбл
   </button>
   
   <!-- Modal -->
@@ -74,14 +74,14 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Добавление жанра</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Добавление лейбла</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <form action="{% url 'add_group'%}" method="POST" class="form-signin">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Название жанра </label>
+                    <label for="exampleInputPassword1" class="form-label">Название лейбла </label>
                     <input type="text" class="form-control" name = "new_group" required>
                   </div>
         <div class="modal-footer">
