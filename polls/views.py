@@ -41,12 +41,12 @@ def person(request):
     context = {
         'persons' : persons,
         }
-    # data = serializers.serialize("xml",persons)
-    # f = open('person.xml','w')
-    # report = File(f)
-    # report.write(data)
+    data = serializers.serialize("xml",persons)
+    f = open('person.xml','w')
+    report = File(f)
+    report.write(data)
 
-    # report.close()
+    report.close()
     return render(request, "artists.html",context=context)
 
 
@@ -209,7 +209,8 @@ def rename_genre(request):
         update_genre = Genres.objects.get(genre_id = id)
         update_genre.genre_name = new_name
         update_genre.save()
-
+        
+        
         return redirect('main_tables')
         
 def rename_group(request):
