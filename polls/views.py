@@ -111,7 +111,6 @@ def change_person_info(request, person_id):
         person.first_name = first_name
         person.second_name = second_name
         person.sex = sex
-        person.birthday = date
         person.save()
 
         return redirect('person')
