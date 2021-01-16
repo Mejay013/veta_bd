@@ -97,7 +97,6 @@ def change_person_info(request, person_id):
         first_name = request.POST['first_name']
         second_name = request.POST['second_name']
         sex = request.POST['sex']
-        date = request.POST['date']
         genre = request.POST['genre']
         country = request.POST['country']
         group = request.POST['group']
